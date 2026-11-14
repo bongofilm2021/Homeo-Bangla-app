@@ -28,9 +28,14 @@ jobs:
           mkdir -p www
           cp *.html www/index.html
           npm init -y
-          npm install @capacitor/core @capacitor/cli @capacitor/android
+          npm install @capacitor/core@6 @capacitor/cli@6 @capacitor/android@6
           npx cap init "Homeo Bangla" "com.homeo.bangla" --web-dir www
           npx cap add android
+          cat << 'EOF' >> android/app/build.gradle
+          dependencies {
+              implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.22"))
+          }
+          EOF
           cd android
           chmod +x gradlew
           ./gradlew assembleDebug
